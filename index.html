@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roman's Time Converter</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="intro">
+        <h1>Welcome to Roman's Time Converter</h1>
+    </div>
+    <section class="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4>Select Time Type</h4>
+                    <input type="radio" onchange="Display_Army()" id="army" name="time_choice" value="Army">
+                    <label for="army">Army</label><br>
+                    <input type="radio" onchange="Display_Regular()" id="regular" name="time_choice" value="Regular">
+                    <label for="regular">Regular</label>
+                </div>
+                <div class="col">
+                    <div id="hiddenArmy" style="display:none;">
+                        <h3>Convert Army to Regular</h3>
+                        <h3>Time to Be Converted:</h3>
+                        <div id="time_wrapper">
+                            <div id="time_input">
+                                <label for="armyHours">
+                                    <input type="number" id="armyHours" value="0" min="0" max="23"><br>
+                                    <span class="label lbl-hrs">Hours</span>
+                                </label>
+                                <label for="armyMinutes">
+                                    <input type="number" id="armyMinutes" value="0" min="0" max="59"><br>
+                                    <span class="label lbl-min">Minutes</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button class="buttons" onclick="armyCalculateButton()">Calculate Time</button>
+                    </div>
+                    <div id="hiddenRegular" style="display:none;">
+                        <h3>Convert Regular to Army</h3>
+                        <h3>Time to Be Converted:</h3>
+                        <div id="time_wrapper">
+                            <div id="time_input">
+                                <label for="regularHours">
+                                    <input type="number" id="regularHours" value="0" min="0" max="12">
+                                    <span class="label lbl-hrs">Hours</span>
+                                </label>
+                                <label for="regularMinutes">
+                                    <input type="number" id="regularMinutes" value="0" min="0" max="59">
+                                    <span class="label lbl-min">Minutes</span>
+                                </label>
+                                <input type="radio" onchange="AmButton()" id="am" name="AmPm" value="am">
+                                <label for="army">A.M.</label><br>
+                                <input type="radio" onchange="PmButton()" id="pm" name="AmPm" value="pm">
+                                <label for="regular">P.M.</label>
+                            </div>
+                        </div>
+                        <button class="buttons" onclick="regularCalculateButton()">Calculate Time</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3 id="finalTime">
+                        Converted Time:
+                    </h3><br>
+                    <button class="buttons" onclick="ClearButton()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function Display_Army() {
+            var armytext = document.getElementById('hiddenArmy');
+            var regulartext = document.getElementById('hiddenRegular');
+            
+            // Show Army details and hide Regular details
+            armytext.style.display = 'block';
+            regulartext.style.display = 'none';
+        }
+
+        function Display_Regular() {
+            var armytext = document.getElementById('hiddenArmy');
+            var regulartext = document.getElementById('hiddenRegular');
+            
+            // Show Regular details and hide Army details
+            regulartext.style.display = 'block';
+            armytext.style.display = 'none';
+        }
+
+        function armyCalculateButton(){
+            var armyHr = document.getElementById('armyHours').value;
+            var armyMin = document.getElementById('armyMinutes').value;
+            var finalValue = 0;
+
+            var currentHr = parseInt(armyHr);
+            var currentMin = parseInt(armyMin);
+         
+            if(currentHr>23 || currentHr < 0){
+                document.getElementById('finalTime').innerText ='Invalid Hour Entered'
+                return
+            }
+            if(currentMin>59 || currentMin<0){
+                document.getElementById('finalTime').innerText ='Invalid Minutes Entered'
+                return
+            }
+            if (currentHr >= 13) {
+                finalValue = currentHr - 12;
+            } else {
+                finalValue = currentHr;
+            }
+
+            var finalTime = finalValue + ':' + (currentMin < 10 ? '0' + currentMin : currentMin) + ' ' + (currentHr >= 12 ? 'PM' : 'AM');
+            document.getElementById('finalTime').innerText = 'Converted Time: ' + finalTime;
+        }
+        function AmButton(){ //The AM/PM button fuctions do nothing (I think)
+            var choice= document.getElementById(am);
+            choice=1;
+        }
+        function PmButton(){
+            var choice= document.getElementById(pm);
+            choice=1;
+        }
+        function regularCalculateButton(){
+            var regularHr = document.getElementById('regularHours').value;
+            var regularMin = document.getElementById('regularMinutes').value;
+            var finalValue = 0;
+            var amPmValue = document.querySelector('input[name="AmPm"]:checked').value;
+            var currentHr = parseInt(regularHr);
+            var currentMin = parseInt(regularMin);
+
+            if (currentHr > 12 || currentHr < 1) {
+                document.getElementById('finalTime').innerText = 'Invalid Hour Entered';
+                return;
+            }
+            if (currentMin > 59 || currentMin < 0) {
+                document.getElementById('finalTime').innerText = 'Invalid Minutes Entered';
+                return;
+            }
+            if (amPmValue === 'pm' && currentHr !== 12) {
+                currentHr += 12;
+            } else if (amPmValue === 'am' && currentHr === 12) {
+                currentHr = 0;
+            }
+
+            var finalTime = currentHr + ':' + (currentMin < 10 ? '0' + currentMin : currentMin);
+            document.getElementById('finalTime').innerText = 'Converted Time: ' + finalTime;
+        }
+        function ClearButton(){
+            var armyHr = document.getElementById('armyHours');
+            var armyMin = document.getElementById('armyMinutes');
+            var regularHr= document.getElementById('regularHours');
+            var regularMin = document.getElementById('regularMinutes');
+            var finalTime = document.getElementById('finalTime');
+            //Close boxes
+            var armytext = document.getElementById('hiddenArmy');
+            var regulartext = document.getElementById('hiddenRegular');
+            regulartext.style.display = 'none';
+            armytext.style.display = 'none';
+
+            armyHr.value = "0";
+            armyMin.value = "0";
+            regularHr.value="0";
+            regularMin.value="0";
+            finalTime.innerText = "Converted Time:";
+        }
+    </script>
+</body>
+</html>
