@@ -1,0 +1,83 @@
+body {
+    font-family: 'Poetsen One', sans-serif;
+    background-image: url("blue1.jpg"); 
+}
+.intro{
+    color:white;
+    text-align: center;
+    font-size: 40px;
+}
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.buttons{
+    background-color: #145C9E;
+    color: white;
+    font-size: 40px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 40px 5px 50px; 
+    margin-top: 30px;
+}
+#regular,#army{
+    margin-top:60px;
+    margin-bottom:20%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.col {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border: 3px solid white;
+    border-radius: 50px;
+    text-align: center;
+    background-color:#B6D7F6;
+    font-size: 40px;
+    margin-top: 5%;
+    margin-bottom: 20%;
+}
+#preArmy,#preRegular{
+   font-size: 40px;
+}
+
+#hiddenArmy,#hiddenRegular{
+    display: none;
+}
+.lbl-hrs{
+    margin: 20px;
+}
+#time_wrapper {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  
+  #time_input {
+    border: 2px solid var(--inactive);
+    width: fit-content;
+   
+    display: flex;
+    align-items: center;
+  }
+  input {
+   font-size: 30px;
+    border: none;
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: 10px;
+  }
